@@ -100,13 +100,7 @@ contract taskManagerSystem   {
 
     }
 
-      // assign projects function
-    function assignProject(uint[] memory _skills, string memory _formerProjects) external onlyUser {
-        require(!manageTask[msg.sender].projectApplied, "project already applied for");
-         manageTask[msg.sender] = taskManager(true, _formerProjects, _skills, false, address(0), "", 0,  false, false, 0);
-         
-
-    }
+ 
 
      // Assign project function
     function assignProject(address _user, string memory _projectName, uint _projectId, uint _amount) external onlyClient {
