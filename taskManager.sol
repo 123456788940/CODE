@@ -1,14 +1,15 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8;
 
-import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
+
 import "./ACOMToken.sol"; 
 
-contract taskManagerSystem is Initializable, ReentrancyGuardUpgradeable  {
-    ACOMToken public acomToken;
+contract taskManagerSystem   {
+    AGEMSToken public acomToken;
     address public client;
     address public user;
     address public owner;
+    bool reentrancyLock;
 
     mapping(address => string) public taskName;
     
@@ -50,13 +51,21 @@ contract taskManagerSystem is Initializable, ReentrancyGuardUpgradeable  {
         owner = msg.sender;
         client = _client;
         user = _user;
-        acomToken = ACOMToken(_acomTokenAddress);
+        acomToken = AGEMSToken(_acomTokenAddress);
     }
 
     // onlyClient modifier
     modifier onlyClient() {
         require(msg.sender == client, "only client can call this function");
         _;
+    }
+
+    modifier nonReentrant() {
+        require(!reentrancyLock, "reentrancyGuard"); 
+        reentrancyLock = true;
+        _;
+        reentrancyLock = false;
+
     }
 
       // onlyOwner modifier
