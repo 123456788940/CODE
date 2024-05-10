@@ -1,0 +1,7 @@
+actor Echo {
+
+  // Say the given phase.
+  public query func codeVerifier(code : Text) : async Bool {
+    return code=="I am soham, an MBA Student";
+  };
+};
